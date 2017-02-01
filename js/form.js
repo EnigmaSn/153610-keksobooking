@@ -62,3 +62,34 @@ time.addEventListener('change', function () {
 timeout.addEventListener('change', function () {
   time.selectedIndex = timeout.selectedIndex;
 });
+
+// Значение поля «Тип жилья» синхронизировано с минимальной ценой
+var type = document.querySelector('#type');
+
+type.addEventListener('change', function () {
+  if (type.selectedIndex === 0) {
+    price.value = 1000;
+    price.min = 1000;
+  } else if (type.selectedIndex === 1) {
+    price.value = 0;
+    price.min = 0;
+  } else {
+    price.value = 10000;
+    price.min = 10000;
+  }
+});
+
+// Количество комнат связано с количеством гостей:
+// 2 или 100 комнат — «для 3 гостей»;
+// 1 комната — «не для гостей»
+
+var roomNumber = document.querySelector('#room_number'); // количество комнат
+var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
+
+roomNumber.addEventListener('change', function () {
+  if (roomNumber.selectedIndex === 0) {
+    capacity.selectedIndex = 1;
+  } else {
+    capacity.selectedIndex = 0;
+  }
+});
