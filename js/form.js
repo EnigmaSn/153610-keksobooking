@@ -1,9 +1,7 @@
 'use strict';
 // скрывашка
 var dialog = document.querySelector('.dialog');
-dialog.classList.add('invisible');
-var invisible = document.querySelector('.invisible');
-invisible.style.display = 'none';
+dialog.style.display = 'none';
 
 // пины
 var pin = document.querySelectorAll('.pin');
@@ -20,7 +18,7 @@ for (var i = 0; i < pin.length; i++) {
       pin[n].classList.add('pin--active');
 
       // открыть окно диалог при нажатии на пин
-      dialog.classList.remove('invisible'); // не работает(
+      dialog.style.display = 'block';
     });
   })(i);
 }
@@ -28,9 +26,39 @@ for (var i = 0; i < pin.length; i++) {
 // Закрытие карточки объявления
 var dialogClose = document.querySelector('.dialog__close');
 
-dialog.classList.remove('invisible');
-
-console.log(dialogClose);
 dialogClose.addEventListener('click', function () {
-  dialog.classList.add('invisible');
+  dialog.style.display = 'none';
+});
+
+// Проверка правильности введенных данных
+// Заголовок объявления:
+var title = document.querySelector('#title');
+
+title.required = true;
+title.minLength = 30;
+title.maxLength = 100;
+
+// Цена за ночь
+var price = document.querySelector('#price');
+
+price.required = true;
+price.pattern = '^[ 0-9]+$'; // только цифры
+price.minLength = 1000;
+price.maxLength = 1000000;
+
+// Адрес
+var address = document.querySelector('#address');
+
+address.required = true;
+
+// Поля «время заезда» и «время выезда» синхронизированы — при изменении значения одного поля, во втором выделяется соответствующее ему (например, если время заезда указано «после 14», то время выезда будет равно «до 14»)
+
+var time = document.querySelector('#time');
+var timeout = document.querySelector('#timeout');
+
+time.addEventListener('change', function () {
+  timeout.selectedIndex = time.selectedIndex;
+});
+timeout.addEventListener('change', function () {
+  time.selectedIndex = timeout.selectedIndex;
 });
