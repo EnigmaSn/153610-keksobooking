@@ -5,23 +5,24 @@ dialog.style.display = 'none';
 
 // пины
 var pin = document.querySelectorAll('.pin');
-var pinActive = document.querySelector('.pin--active');
 
 // клики по пинам
 // значение function(n) объявляется – и тут же выполняется, т.е. n = i.
 // Так как function(n) тут же завершается, то значение x больше не меняется. Оно и будет использовано в возвращаемой функции-стрелке.
 
-for (var i = 0; i < pin.length; i++) {
-  (function (n) {
-    pin[n].addEventListener('click', function () {
-      pinActive.classList.remove('pin--active');
-      pinActive = pin[n];
-      pin[n].classList.add('pin--active');
+var disableActive = function () {
+  var element = document.querySelector('.pin--active');
+  if (element) {
+    element.classList.remove('pin--active');
+  }
+};
 
-      // открыть окно диалог при нажатии на пин
-      dialog.style.display = 'block';
-    });
-  })(i);
+for (var i = 0; i < pin.length; i++) {
+  pin[i].addEventListener('click', function (event) {
+    disableActive(); // вызов функции удаления активного класса при клике на другой пин
+    event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
+    dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
+  });
 }
 
 // Закрытие карточки объявления
@@ -96,4 +97,4 @@ var roomCapacity = function () {
 
 roomCapacity();
 
-roomNumber.addEventListener('change', roomCapacity());
+roomNumber.addEventListener('change', roomCapacity);
