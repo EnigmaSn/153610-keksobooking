@@ -10,6 +10,7 @@ var pinActive = document.querySelector('.pin--active');
 // клики по пинам
 // значение function(n) объявляется – и тут же выполняется, т.е. n = i.
 // Так как function(n) тут же завершается, то значение x больше не меняется. Оно и будет использовано в возвращаемой функции-стрелке.
+
 for (var i = 0; i < pin.length; i++) {
   (function (n) {
     pin[n].addEventListener('click', function () {
@@ -85,11 +86,14 @@ type.addEventListener('change', function () {
 
 var roomNumber = document.querySelector('#room_number'); // количество комнат
 var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
-
-roomNumber.addEventListener('change', function () {
+var roomCapacity = function () {
   if (roomNumber.selectedIndex === 0) {
     capacity.selectedIndex = 1;
   } else {
     capacity.selectedIndex = 0;
   }
-});
+};
+
+roomCapacity();
+
+roomNumber.addEventListener('change', roomCapacity());
