@@ -42,7 +42,7 @@ title.maxLength = 100;
 var price = document.querySelector('#price');
 
 price.required = true;
-price.pattern = '^[ 0-9]+$'; // только цифры
+price.type = 'number'; // только цифры
 price.minLength = 1000;
 price.maxLength = 1000000;
 
