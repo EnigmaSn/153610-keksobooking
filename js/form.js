@@ -31,6 +31,14 @@ var showDialog = function () {
   dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
 };
 
+var escCloseDialog = function () {
+  document.addEventListener('keydown', function (event) {
+    if (event.keyCode === ESCAPE_KEY_CODE) {
+      dialog.style.display = 'none';
+    }
+  });
+};
+
 // синхронизация количества комнат и гостей
 var roomCapacity = function () {
   if (roomNumber.selectedIndex === 0) {
@@ -40,18 +48,18 @@ var roomCapacity = function () {
   }
 };
 
-dialog.style.display = 'none'; // изначально скрыто
-
 // нажатие на пины
 for (var i = 0; i < pin.length; i++) {
   // по клику
   pin[i].addEventListener('click', function () {
-      showDialog();
+    showDialog();
+    escCloseDialog();
   });
   // по клавише
   pin[i].addEventListener('keydown', function (event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       showDialog();
+      escCloseDialog();
     }
   });
 }
@@ -61,14 +69,6 @@ for (var i = 0; i < pin.length; i++) {
 dialogClose.addEventListener('click', function () {
   dialog.style.display = 'none';
 });
-// по escape
-if (dialog.style.display === 'block') {
-  document.addEventListener('keydown', function (event) {
-    if (event.keyCode === ESCAPE_KEY_CODE) {
-      dialog.style.display = 'none';
-    }
-  });
-}
 
 // Проверка правильности введенных данных
 // Заголовок объявления:
