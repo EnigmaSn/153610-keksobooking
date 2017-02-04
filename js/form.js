@@ -19,31 +19,33 @@ var capacity = document.querySelector('#capacity'); // вместимость (�
 
 // деактивация пина при переключении
 var disableActive = function () {
-    var element = document.querySelector('.pin--active');
-    if (element) {
-        element.classList.remove('pin--active');
-    }
+  var element = document.querySelector('.pin--active');
+  if (element) {
+    element.classList.remove('pin--active');
+  }
 };
 
 // синхронизация количества комнат и гостей
 var roomCapacity = function () {
-    if (roomNumber.selectedIndex === 0) {
-        capacity.selectedIndex = 1;
-    } else {
-        capacity.selectedIndex = 0;
-    }
+  if (roomNumber.selectedIndex === 0) {
+    capacity.selectedIndex = 1;
+  } else {
+    capacity.selectedIndex = 0;
+  }
 };
 
 dialog.style.display = 'none'; // изначально скрыто
 
-// клики по пинам
+// нажатие на пины
 for (var i = 0; i < pin.length; i++) {
+  // по клику
   pin[i].addEventListener('click', function (event) {
     disableActive(); // вызов функции удаления активного класса при клике на другой пин
     event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
     dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
   });
-  pin[1].addEventListener('keydown', function (event) {
+  // по клавише
+  pin[i].addEventListener('keydown', function (event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       disableActive(); // вызов функции удаления активного класса при клике на другой пин
       event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
