@@ -1,63 +1,87 @@
 'use strict';
-// скрывашка
-var dialog = document.querySelector('.dialog');
-dialog.style.display = 'none';
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
 
-// пины
-var pin = document.querySelectorAll('.pin');
+var dialog = document.querySelector('.dialog'); // скрывашка
+var pin = document.querySelectorAll('.pin'); // пины
+var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
 
-// клики по пинам
-// значение function(n) объявляется – и тут же выполняется, т.е. n = i.
-// Так как function(n) тут же завершается, то значение x больше не меняется. Оно и будет использовано в возвращаемой функции-стрелке.
+var title = document.querySelector('#title'); // заголовок объявления
+var price = document.querySelector('#price'); // цена за ночь
+var address = document.querySelector('#address');
 
+var time = document.querySelector('#time'); // время заезда
+var timeout = document.querySelector('#timeout'); // время выезда
+var type = document.querySelector('#type'); // тип жилья
+
+var roomNumber = document.querySelector('#room_number'); // количество комнат
+var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
+
+// деактивация пина при переключении
 var disableActive = function () {
-  var element = document.querySelector('.pin--active');
-  if (element) {
-    element.classList.remove('pin--active');
-  }
+    var element = document.querySelector('.pin--active');
+    if (element) {
+        element.classList.remove('pin--active');
+    }
 };
 
+// синхронизация количества комнат и гостей
+var roomCapacity = function () {
+    if (roomNumber.selectedIndex === 0) {
+        capacity.selectedIndex = 1;
+    } else {
+        capacity.selectedIndex = 0;
+    }
+};
+
+dialog.style.display = 'none'; // изначально скрыто
+
+// клики по пинам
 for (var i = 0; i < pin.length; i++) {
   pin[i].addEventListener('click', function (event) {
     disableActive(); // вызов функции удаления активного класса при клике на другой пин
     event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
     dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
   });
+  pin[1].addEventListener('keydown', function (event) {
+    if (event.keyCode === ENTER_KEY_CODE) {
+      disableActive(); // вызов функции удаления активного класса при клике на другой пин
+      event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
+      dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
+    }
+  });
 }
 
-// Закрытие карточки объявления
-var dialogClose = document.querySelector('.dialog__close');
-
+// закрытие диалогового окна
+// по клику
 dialogClose.addEventListener('click', function () {
   dialog.style.display = 'none';
 });
+// по escape
+if (dialog.style.display === 'block') {
+  document.addEventListener('keydown', function () {
+    if (event.keyCode === ESCAPE_KEY_CODE) {
+      dialog.style.display = 'none';
+    }
+  });
+}
 
 // Проверка правильности введенных данных
 // Заголовок объявления:
-var title = document.querySelector('#title');
-
 title.required = true;
 title.minLength = 30;
 title.maxLength = 100;
 
 // Цена за ночь
-var price = document.querySelector('#price');
-
 price.required = true;
 price.type = 'number'; // только цифры
 price.minLength = 1000;
 price.maxLength = 1000000;
 
 // Адрес
-var address = document.querySelector('#address');
-
 address.required = true;
 
 // Поля «время заезда» и «время выезда» синхронизированы — при изменении значения одного поля, во втором выделяется соответствующее ему (например, если время заезда указано «после 14», то время выезда будет равно «до 14»)
-
-var time = document.querySelector('#time');
-var timeout = document.querySelector('#timeout');
-
 time.addEventListener('change', function () {
   timeout.selectedIndex = time.selectedIndex;
 });
@@ -66,8 +90,6 @@ timeout.addEventListener('change', function () {
 });
 
 // Значение поля «Тип жилья» синхронизировано с минимальной ценой
-var type = document.querySelector('#type');
-
 type.addEventListener('change', function () {
   if (type.selectedIndex === 0) {
     price.value = 1000;
@@ -82,19 +104,5 @@ type.addEventListener('change', function () {
 });
 
 // Количество комнат связано с количеством гостей:
-// 2 или 100 комнат — «для 3 гостей»;
-// 1 комната — «не для гостей»
-
-var roomNumber = document.querySelector('#room_number'); // количество комнат
-var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
-var roomCapacity = function () {
-  if (roomNumber.selectedIndex === 0) {
-    capacity.selectedIndex = 1;
-  } else {
-    capacity.selectedIndex = 0;
-  }
-};
-
 roomCapacity();
-
 roomNumber.addEventListener('change', roomCapacity);
