@@ -50,7 +50,7 @@ var roomCapacity = function () {
   }
 };
 
-// нажатие на пины
+// нажатие на пины через делегирование
 pinMap.addEventListener('click', function (event) {
   // не только клик по пину, но и внутри него
   if (event.target.closest('.pin')) {
@@ -58,20 +58,11 @@ pinMap.addEventListener('click', function (event) {
   }
 });
 
-/*
-for (var i = 0; i < pin.length; i++) {
-  // по клику
-  pin[i].addEventListener('click', function () {
-    showDialog();
-  });
-  // по клавише
-  pin[i].addEventListener('keydown', function (event) {
-    if (event.keyCode === ENTER_KEY_CODE) {
-      showDialog();
-    }
-  });
-}
-*/
+pinMap.addEventListener('keydown', function (event) {
+  if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
+    showDialog(event);
+  }
+});
 
 // закрытие диалогового окна
 // по клику
