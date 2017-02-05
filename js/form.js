@@ -28,7 +28,7 @@ var disableActive = function () {
 
 var showDialog = function () {
   disableActive(); // вызов функции удаления активного класса при клике на другой пин
-  event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
+  event.target.closest('.pin').classList.add('pin--active'); // почему не дает поставить this?
   dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
   escCloseDialog();
 };
@@ -54,7 +54,7 @@ var roomCapacity = function () {
 pinMap.addEventListener('click', function (event) {
   // не только клик по пину, но и внутри него
   if (event.target.closest('.pin')) {
-    showDialog();
+    showDialog(event);
   }
 });
 
