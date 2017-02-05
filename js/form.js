@@ -4,7 +4,6 @@ var ESCAPE_KEY_CODE = 27;
 
 var dialog = document.querySelector('.dialog'); // скрывашка
 var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
-var pin = document.querySelectorAll('.pin'); // пины
 var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
 
 var title = document.querySelector('#title'); // заголовок объявления
@@ -23,13 +22,16 @@ var disableActive = function () {
   var element = document.querySelector('.pin--active');
   if (element) {
     element.classList.remove('pin--active');
+    element.setAttribute('aria-pressed', false);
   }
 };
 
 var showDialog = function () {
   disableActive(); // вызов функции удаления активного класса при клике на другой пин
   event.target.closest('.pin').classList.add('pin--active'); // почему не дает поставить this?
+  event.target.closest('.pin').setAttribute('aria-pressed', true);
   dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
+  dialog.setAttribute('aria-hidden', false);
   escCloseDialog();
 };
 
@@ -37,6 +39,7 @@ var escCloseDialog = function () {
   document.addEventListener('keydown', function (event) {
     if (event.keyCode === ESCAPE_KEY_CODE) {
       dialog.style.display = 'none';
+      dialog.setAttribute('aria-hidden', true);
     }
   });
 };
