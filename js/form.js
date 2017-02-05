@@ -3,6 +3,7 @@ var ENTER_KEY_CODE = 13;
 var ESCAPE_KEY_CODE = 27;
 
 var dialog = document.querySelector('.dialog'); // скрывашка
+var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
 var pin = document.querySelectorAll('.pin'); // пины
 var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
 
@@ -29,6 +30,7 @@ var showDialog = function () {
   disableActive(); // вызов функции удаления активного класса при клике на другой пин
   event.currentTarget.classList.add('pin--active'); // почему не дает поставить this?
   dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
+  escCloseDialog();
 };
 
 var escCloseDialog = function () {
@@ -49,20 +51,26 @@ var roomCapacity = function () {
 };
 
 // нажатие на пины
+pinMap.addEventListener('click', function (event) {
+  if (event.target === pin || event.target === pin.parentNode) {
+    showDialog();
+  }
+});
+
+/*
 for (var i = 0; i < pin.length; i++) {
   // по клику
   pin[i].addEventListener('click', function () {
     showDialog();
-    escCloseDialog();
   });
   // по клавише
   pin[i].addEventListener('keydown', function (event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       showDialog();
-      escCloseDialog();
     }
   });
 }
+*/
 
 // закрытие диалогового окна
 // по клику
@@ -85,7 +93,7 @@ price.maxLength = 1000000;
 // Адрес
 address.required = true;
 
-// Поля «время заезда» и «время выезда» синхронизированы — при изменении значения одного поля, во втором выделяется соответствующее ему (например, если время заезда указано «после 14», то время выезда будет равно «до 14»)
+// Поля «время заезда» и «время выезда» синхронизированы
 time.addEventListener('change', function () {
   timeout.selectedIndex = time.selectedIndex;
 });
