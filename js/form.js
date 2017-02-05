@@ -52,7 +52,8 @@ var roomCapacity = function () {
 
 // нажатие на пины
 pinMap.addEventListener('click', function (event) {
-  if (event.target === pin || event.target === pin.parentNode) {
+  // не только клик по пину, но и внутри него
+  if (event.target.closest('.pin')) {
     showDialog();
   }
 });
