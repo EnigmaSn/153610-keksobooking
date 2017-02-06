@@ -26,13 +26,12 @@ var disableActive = function () {
   }
 };
 
-var showDialog = function () {
+var showDialog = function (event) {
   disableActive(); // вызов функции удаления активного класса при клике на другой пин
   event.target.closest('.pin').classList.add('pin--active'); // почему не дает поставить this?
   event.target.closest('.pin').setAttribute('aria-pressed', true);
   dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
   dialog.setAttribute('aria-hidden', false);
-  escCloseDialog();
 };
 
 var escCloseDialog = function () {
@@ -52,6 +51,8 @@ var roomCapacity = function () {
     capacity.selectedIndex = 0;
   }
 };
+
+escCloseDialog(); // закрывать диалог по esc
 
 // нажатие на пины через делегирование
 pinMap.addEventListener('click', function (event) {
