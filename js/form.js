@@ -1,10 +1,4 @@
 'use strict';
-var ENTER_KEY_CODE = 13;
-var ESCAPE_KEY_CODE = 27;
-
-var dialog = document.querySelector('.dialog'); // скрывашка
-var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
-var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
 
 var title = document.querySelector('#title'); // заголовок объявления
 var price = document.querySelector('#price'); // цена за ночь
@@ -17,32 +11,6 @@ var type = document.querySelector('#type'); // тип жилья
 var roomNumber = document.querySelector('#room_number'); // количество комнат
 var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
 
-// деактивация пина при переключении
-var disableActive = function () {
-  var element = document.querySelector('.pin--active');
-  if (element) {
-    element.classList.remove('pin--active');
-    element.setAttribute('aria-pressed', false);
-  }
-};
-
-var showDialog = function (event) {
-  disableActive(); // вызов функции удаления активного класса при клике на другой пин
-  event.target.closest('.pin').classList.add('pin--active'); // почему не дает поставить this?
-  event.target.closest('.pin').setAttribute('aria-pressed', true);
-  dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
-  dialog.setAttribute('aria-hidden', false);
-};
-
-var escCloseDialog = function () {
-  document.addEventListener('keydown', function (event) {
-    if (event.keyCode === ESCAPE_KEY_CODE) {
-      dialog.style.display = 'none';
-      dialog.setAttribute('aria-hidden', true);
-    }
-  });
-};
-
 // синхронизация количества комнат и гостей
 var roomCapacity = function () {
   if (roomNumber.selectedIndex === 0) {
@@ -52,27 +20,7 @@ var roomCapacity = function () {
   }
 };
 
-escCloseDialog(); // закрывать диалог по esc
-
-// нажатие на пины через делегирование
-pinMap.addEventListener('click', function (event) {
-  // не только клик по пину, но и внутри него
-  if (event.target.closest('.pin')) {
-    showDialog(event);
-  }
-});
-
-pinMap.addEventListener('keydown', function (event) {
-  if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
-    showDialog(event);
-  }
-});
-
-// закрытие диалогового окна
-// по клику
-dialogClose.addEventListener('click', function () {
-  dialog.style.display = 'none';
-});
+window.initializePins();
 
 // Проверка правильности введенных данных
 // Заголовок объявления:
