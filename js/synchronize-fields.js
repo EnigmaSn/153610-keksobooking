@@ -2,12 +2,6 @@
 
 // synchronize-fields.js — модуль, который экспортирует в глобальную область видимости функцию synchronizeFields.
 
-// Функция принимает на вход пять параметров:
-
-// в первых двух параметрах передаются DOM-элементы синхронизируемых полей.
-
-// Следующие два параметра представляют собой два массива, которые содержат синхронизируемые значения. Например, если при выборе в первом поле значения с value а, во втором должно выбираться значение b (и наоборот), то массивы должны выглядеть как ['a'] и ['b'].
-
 // Последний параметр содержит строку, с названием свойства второго объекта, которое нужно изменять при изменении первого (например, 'max' или 'value').
 
 var synchronizeFields = function (element1, element2) {
@@ -22,15 +16,19 @@ var synchronizeFields = function (element1, element2) {
   var roomNumber = document.querySelector('#room_number'); // количество комнат
   var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
 
+  var rooms = ['one', 'two', 'many'];
+  var guests = ['three', 'no-guests'];
+
   // синхронизация количества комнат и гостей
-  /* var roomCapacity = function () {
-    if (roomNumber.selectedIndex === 0) {
+  if (roomNumber.selectedIndex === 0) {
       capacity.selectedIndex = 1;
     } else {
       capacity.selectedIndex = 0;
     }
   };
-  */
+
+  // Следующие два параметра представляют собой два массива, которые содержат синхронизируемые значения. Например, если при выборе в первом поле значения с value а, во втором должно выбираться значение b (и наоборот), то массивы должны выглядеть как ['a'] и ['b'].
+
 
   /* Вызов */
 
@@ -58,7 +56,6 @@ var synchronizeFields = function (element1, element2) {
   });
 
   // Значение поля «Тип жилья» синхронизировано с минимальной ценой
-  /*
   type.addEventListener('change', function () {
     if (type.selectedIndex === 0) {
       price.value = 1000;
@@ -71,11 +68,8 @@ var synchronizeFields = function (element1, element2) {
       price.min = 10000;
     }
   });
-  */
 
   // Количество комнат связано с количеством гостей:
-  /*
   roomCapacity();
   roomNumber.addEventListener('change', roomCapacity);
-  */
 };
