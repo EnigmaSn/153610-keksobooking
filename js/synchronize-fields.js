@@ -2,7 +2,7 @@
 
 // Последний параметр содержит строку, с названием свойства второго объекта, которое нужно изменять при изменении первого (например, 'max' или 'value').
 
-var synchronizeFields = function (element1, element2, array1, array2, value) {
+var synchronizeFields = function (element1, element2, arr1, arr2, property) {
   var title = document.querySelector('#title'); // заголовок объявления
   var price = document.querySelector('#price'); // цена за ночь
   var address = document.querySelector('#address');
@@ -16,6 +16,20 @@ var synchronizeFields = function (element1, element2, array1, array2, value) {
   var roomNumberValues = ['1', '2', '100'];
   var capacityValues = ['0', '3'];
 
+  if (property === 'value') {
+    element1.addEventListener('change', function (event) {
+      var index = arr1.indexOf(event.target.value);
+      element2[property] = arr2[index];
+    });
+    element2.addEventListener('change', function (event) {
+      var index = arr2.indexOf(event.target.value);
+      element1[property] = arr1[index];
+    });
+  }
+
+  // element1.addEventListener('change', function () {
+  //   element2[value] = element1.[value];
+  // });
 
   // синхронизация количества комнат и гостей
   // if (element1.selectedIndex === 0) {
@@ -53,26 +67,26 @@ var synchronizeFields = function (element1, element2, array1, array2, value) {
   address.required = true;
 
   // Поля «время заезда» и «время выезда» синхронизированы
-  element1.addEventListener('change', function () {
-    element2.value = element1.value;
-  });
-  element2.addEventListener('change', function () {
-    element1.value = element2.value;
-  });
+  // element1.addEventListener('change', function () {
+  //   element2.value = element1.value;
+  // });
+  // element2.addEventListener('change', function () {
+  //   element1.value = element2.value;
+  // });
 
   // Значение поля «Тип жилья» синхронизировано с минимальной ценой
-  type.addEventListener('change', function () {
-    if (type.selectedIndex === 0) {
-      price.value = 1000;
-      price.min = 1000;
-    } else if (type.selectedIndex === 1) {
-      price.value = 0;
-      price.min = 0;
-    } else {
-      price.value = 10000;
-      price.min = 10000;
-    }
-  });
+  // type.addEventListener('change', function () {
+  //   if (type.selectedIndex === 0) {
+  //     price.value = 1000;
+  //     price.min = 1000;
+  //   } else if (type.selectedIndex === 1) {
+  //     price.value = 0;
+  //     price.min = 0;
+  //   } else {
+  //     price.value = 10000;
+  //     price.min = 10000;
+  //   }
+  // });
 
   // Количество комнат связано с количеством гостей:
   // roomCapacity();
