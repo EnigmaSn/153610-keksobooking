@@ -4,7 +4,7 @@
 // Функция должна содержать всю логику по отрисовке меток на карте:
 // добавление обработчиков, показ и закрытие карточки, отметку метки как активной.
 
-var initializePins = function () {
+window.initializePins = function () {
   var ENTER_KEY_CODE = 13;
   var ESCAPE_KEY_CODE = 27;
 
