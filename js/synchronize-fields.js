@@ -4,13 +4,15 @@
 
 // Последний параметр содержит строку, с названием свойства второго объекта, которое нужно изменять при изменении первого (например, 'max' или 'value').
 
-var synchronizeFields = function (element1, element2) {
+var synchronizeFields = function (element1, element2, [], [], value) {
   var title = document.querySelector('#title'); // заголовок объявления
   var price = document.querySelector('#price'); // цена за ночь
   var address = document.querySelector('#address');
 
   var time = document.querySelector('#time'); // время заезда
   var timeout = document.querySelector('#timeout'); // время выезда
+  var timeSelected = time.selectedOptions.value;
+  console.log(timeSelected);
   var type = document.querySelector('#type'); // тип жилья
 
   var roomNumber = document.querySelector('#room_number'); // количество комнат
@@ -20,12 +22,11 @@ var synchronizeFields = function (element1, element2) {
   var guests = ['three', 'no-guests'];
 
   // синхронизация количества комнат и гостей
-  if (roomNumber.selectedIndex === 0) {
-      capacity.selectedIndex = 1;
+  if (element1.selectedIndex === 0) {
+      element2.selectedIndex = 1;
     } else {
-      capacity.selectedIndex = 0;
+      element2.selectedIndex = 0;
     }
-  };
 
   // Следующие два параметра представляют собой два массива, которые содержат синхронизируемые значения. Например, если при выборе в первом поле значения с value а, во втором должно выбираться значение b (и наоборот), то массивы должны выглядеть как ['a'] и ['b'].
 
@@ -49,10 +50,10 @@ var synchronizeFields = function (element1, element2) {
 
   // Поля «время заезда» и «время выезда» синхронизированы
   element1.addEventListener('change', function () {
-    element2.selectedIndex = element1.selectedIndex;
+    element2.value = element1.value;
   });
   element2.addEventListener('change', function () {
-    element1.selectedIndex = element2.selectedIndex;
+    element1.value = element2.value;
   });
 
   // Значение поля «Тип жилья» синхронизировано с минимальной ценой
@@ -71,5 +72,6 @@ var synchronizeFields = function (element1, element2) {
 
   // Количество комнат связано с количеством гостей:
   roomCapacity();
-  roomNumber.addEventListener('change', roomCapacity);
+  element1.addEventListener('change', roomCapacity);
+  element2.addEventListener('change', roomCapacity);
 };
