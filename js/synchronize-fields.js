@@ -1,32 +1,36 @@
 'use strict';
 
-// synchronize-fields.js — модуль, который экспортирует в глобальную область видимости функцию synchronizeFields.
-
 // Последний параметр содержит строку, с названием свойства второго объекта, которое нужно изменять при изменении первого (например, 'max' или 'value').
 
-var synchronizeFields = function (element1, element2, [], [], value) {
+var synchronizeFields = function (element1, element2, array1, array2, value) {
   var title = document.querySelector('#title'); // заголовок объявления
   var price = document.querySelector('#price'); // цена за ночь
   var address = document.querySelector('#address');
 
   var time = document.querySelector('#time'); // время заезда
   var timeout = document.querySelector('#timeout'); // время выезда
-  var timeSelected = time.selectedOptions.value;
-  console.log(timeSelected);
   var type = document.querySelector('#type'); // тип жилья
 
   var roomNumber = document.querySelector('#room_number'); // количество комнат
   var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
+  var roomNumberValues = ['1', '2', '100'];
+  var capacityValues = ['0', '3'];
 
-  var rooms = ['one', 'two', 'many'];
-  var guests = ['three', 'no-guests'];
 
   // синхронизация количества комнат и гостей
-  if (element1.selectedIndex === 0) {
-      element2.selectedIndex = 1;
-    } else {
-      element2.selectedIndex = 0;
-    }
+  // if (element1.selectedIndex === 0) {
+  //     element2.selectedIndex = 1;
+  //   } else {
+  //     element2.selectedIndex = 0;
+  //   }
+
+  // var roomCapacity = function () {
+  //   if (element1.value === roomNumberValues[0]) {
+  //     element2.value = capacityValues[0];
+  //   } else {
+  //     element2.value = capacityValues[1];
+  //   }
+  // };
 
   // Следующие два параметра представляют собой два массива, которые содержат синхронизируемые значения. Например, если при выборе в первом поле значения с value а, во втором должно выбираться значение b (и наоборот), то массивы должны выглядеть как ['a'] и ['b'].
 
@@ -71,7 +75,6 @@ var synchronizeFields = function (element1, element2, [], [], value) {
   });
 
   // Количество комнат связано с количеством гостей:
-  roomCapacity();
-  element1.addEventListener('change', roomCapacity);
-  element2.addEventListener('change', roomCapacity);
+  // roomCapacity();
+  // element1.addEventListener('change', roomCapacity);
 };

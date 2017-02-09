@@ -3,5 +3,7 @@
 // торжество минимализма
 window.initializePins(); // пины и диалог
 window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], 'value'); // синхронизация времени
+window.synchronizeFields(roomNumber, capacity, roomNumberValues, capacityValues, 'value'); // синхронизация количества комнат и гостей
+
 
 
