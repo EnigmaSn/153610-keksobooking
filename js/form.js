@@ -1,116 +1,34 @@
 'use strict';
-var ENTER_KEY_CODE = 13;
-var ESCAPE_KEY_CODE = 27;
 
-var dialog = document.querySelector('.dialog'); // скрывашка
-var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
-var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
+var address = document.querySelector('#address');
+address.required = true;
 
 var title = document.querySelector('#title'); // заголовок объявления
-var price = document.querySelector('#price'); // цена за ночь
-var address = document.querySelector('#address');
-
-var time = document.querySelector('#time'); // время заезда
-var timeout = document.querySelector('#timeout'); // время выезда
-var type = document.querySelector('#type'); // тип жилья
-
-var roomNumber = document.querySelector('#room_number'); // количество комнат
-var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
-
-// деактивация пина при переключении
-var disableActive = function () {
-  var element = document.querySelector('.pin--active');
-  if (element) {
-    element.classList.remove('pin--active');
-    element.setAttribute('aria-pressed', false);
-  }
-};
-
-var showDialog = function (event) {
-  disableActive(); // вызов функции удаления активного класса при клике на другой пин
-  event.target.closest('.pin').classList.add('pin--active'); // почему не дает поставить this?
-  event.target.closest('.pin').setAttribute('aria-pressed', true);
-  dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
-  dialog.setAttribute('aria-hidden', false);
-};
-
-var escCloseDialog = function () {
-  document.addEventListener('keydown', function (event) {
-    if (event.keyCode === ESCAPE_KEY_CODE) {
-      dialog.style.display = 'none';
-      dialog.setAttribute('aria-hidden', true);
-    }
-  });
-};
-
-// синхронизация количества комнат и гостей
-var roomCapacity = function () {
-  if (roomNumber.selectedIndex === 0) {
-    capacity.selectedIndex = 1;
-  } else {
-    capacity.selectedIndex = 0;
-  }
-};
-
-escCloseDialog(); // закрывать диалог по esc
-
-// нажатие на пины через делегирование
-pinMap.addEventListener('click', function (event) {
-  // не только клик по пину, но и внутри него
-  if (event.target.closest('.pin')) {
-    showDialog(event);
-  }
-});
-
-pinMap.addEventListener('keydown', function (event) {
-  if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
-    showDialog(event);
-  }
-});
-
-// закрытие диалогового окна
-// по клику
-dialogClose.addEventListener('click', function () {
-  dialog.style.display = 'none';
-});
 
 // Проверка правильности введенных данных
-// Заголовок объявления:
 title.required = true;
 title.minLength = 30;
 title.maxLength = 100;
 
+var price = document.querySelector('#price'); // цена за ночь
 // Цена за ночь
 price.required = true;
 price.type = 'number'; // только цифры
 price.minLength = 1000;
 price.maxLength = 1000000;
 
-// Адрес
-address.required = true;
+var time = document.querySelector('#time'); // время заезда
+var timeout = document.querySelector('#timeout'); // время выезда
 
-// Поля «время заезда» и «время выезда» синхронизированы
-time.addEventListener('change', function () {
-  timeout.selectedIndex = time.selectedIndex;
-});
-timeout.addEventListener('change', function () {
-  time.selectedIndex = timeout.selectedIndex;
-});
+var roomNumber = document.querySelector('#room_number'); // количество комнат
+var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
 
-// Значение поля «Тип жилья» синхронизировано с минимальной ценой
-type.addEventListener('change', function () {
-  if (type.selectedIndex === 0) {
-    price.value = 1000;
-    price.min = 1000;
-  } else if (type.selectedIndex === 1) {
-    price.value = 0;
-    price.min = 0;
-  } else {
-    price.value = 10000;
-    price.min = 10000;
-  }
-});
+var type = document.querySelector('#type'); // тип жилья
 
-// Количество комнат связано с количеством гостей:
-roomCapacity();
-roomNumber.addEventListener('change', roomCapacity);
+window.initializePins(); // пины и диалог
+
+window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], 'value');
+
+window.synchronizeFields(roomNumber, capacity, ['1', '2', '100'], ['0', '3', '3'], 'value');
+
+window.synchronizeFields(type, price, ['1000', '0', '10000'], ['1000', '0', '10000'], 'min');
