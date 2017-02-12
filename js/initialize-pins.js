@@ -1,6 +1,6 @@
 'use strict';
 
-window.initializePins = function () {
+window.initializePins = (function () {
   var ENTER_KEY_CODE = 13;
   var ESCAPE_KEY_CODE = 27;
 
@@ -57,4 +57,4 @@ window.initializePins = function () {
   dialogClose.addEventListener('click', function () {
     dialog.style.display = 'none';
   });
-};
+})();

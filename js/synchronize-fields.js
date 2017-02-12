@@ -1,6 +1,6 @@
 'use strict';
 
-window.synchronizeFields = function (source, target, array1, array2, property) {
+window.synchronizeFields = (function (source, target, array1, array2, property) {
 
   var sync = function () {
     var selectedVal = array1.indexOf(source.value);
@@ -15,4 +15,4 @@ window.synchronizeFields = function (source, target, array1, array2, property) {
   });
 
   sync();
-};
+})();
