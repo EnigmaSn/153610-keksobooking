@@ -7,24 +7,52 @@
 // Перепишите виджет synchronize-fields.js, связывающий поля между собой таким образом, чтобы логика изменения значения зависимого поля находилась в функции обратного вызова
 
 window.showCard = (function () {
-  var openCard = function () {
-    window.dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
-    window.dialog.setAttribute('aria-hidden', false);
+  var ESCAPE_KEY_CODE = 27;
+
+  var dialog = document.querySelector('.dialog');
+  var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
+
+  // деактивация пина при переключении
+  var disableActive = function () {
+    var element = document.querySelector('.pin--active');
+    if (element) {
+      element.classList.remove('pin--active');
+      element.setAttribute('aria-pressed', false);
+    }
   };
 
-  var changeActivePin = function (event) {
-    window.disableActive(); // вызов функции удаления активного класса при клике на другой пин
+  var onDialogShow = function (event) {
+    disableActive(); // вызов функции удаления активного класса при клике на другой пин
     event.target.closest('.pin').classList.add('pin--active');
     event.target.closest('.pin').setAttribute('aria-pressed', true);
   };
 
-  if (changeActivePin === 'function') {
-    changeActivePin();
+  if (onDialogShow === 'function') {
+    onDialogShow();
   }
 
+  var showDialog = function (callback) {
+    window.dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
+    window.dialog.setAttribute('aria-hidden', false);
+  };
+
+  var escCloseDialog = function () {
+    document.addEventListener('keydown', function (event) {
+      if (event.keyCode === ESCAPE_KEY_CODE) {
+        dialog.style.display = 'none';
+        dialog.setAttribute('aria-hidden', true);
+      }
+    });
+  };
+
+  // закрытие диалогового окна
+  escCloseDialog(); // закрывать диалог по esc
+  dialogClose.addEventListener('click', function () {
+    dialog.style.display = 'none';
+  });
+
   return function (callback) {
-    openCard();
-    changeActivePin();
-    changeActivePin = callback;
+    showDialog();
+    onDialogShow = callback;
   };
 })();
