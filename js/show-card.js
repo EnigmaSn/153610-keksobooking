@@ -12,28 +12,13 @@ window.showCard = (function () {
   var dialog = document.querySelector('.dialog');
   var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
 
-  // деактивация пина при переключении
-  var disableActive = function () {
-    var element = document.querySelector('.pin--active');
-    if (element) {
-      element.classList.remove('pin--active');
-      element.setAttribute('aria-pressed', false);
-    }
-  };
-
-  var onDialogShow = function (event) {
-    disableActive(); // вызов функции удаления активного класса при клике на другой пин
-    event.target.closest('.pin').classList.add('pin--active');
-    event.target.closest('.pin').setAttribute('aria-pressed', true);
-  };
-
-  if (onDialogShow === 'function') {
-    onDialogShow();
-  }
-
   var showDialog = function (callback) {
     window.dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
     window.dialog.setAttribute('aria-hidden', false);
+
+    if (typeof callback === 'function') {
+      callback();
+    }
   };
 
   var escCloseDialog = function () {
@@ -53,6 +38,6 @@ window.showCard = (function () {
 
   return function (callback) {
     showDialog();
-    onDialogShow = callback;
+    // onDialogShow = callback;
   };
 })();
