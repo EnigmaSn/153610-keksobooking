@@ -17,14 +17,6 @@ window.initializePins = function () {
     }
   };
 
-  var showDialog = function (event) {
-    disableActive(); // вызов функции удаления активного класса при клике на другой пин
-    event.target.closest('.pin').classList.add('pin--active'); // почему не дает поставить this?
-    event.target.closest('.pin').setAttribute('aria-pressed', true);
-    dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
-    dialog.setAttribute('aria-hidden', false);
-  };
-
   var escCloseDialog = function () {
     document.addEventListener('keydown', function (event) {
       if (event.keyCode === ESCAPE_KEY_CODE) {
@@ -42,13 +34,13 @@ window.initializePins = function () {
   pinMap.addEventListener('click', function (event) {
     // не только клик по пину, но и внутри него
     if (event.target.closest('.pin')) {
-      showDialog(event);
+      window.showCard(event);
     }
   });
 
   pinMap.addEventListener('keydown', function (event) {
     if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
-      showDialog(event);
+      window.showCard(event);
     }
   });
 
@@ -57,4 +49,9 @@ window.initializePins = function () {
   dialogClose.addEventListener('click', function () {
     dialog.style.display = 'none';
   });
+
+  return {
+    dialog: dialog,
+    disableActive: disableActive
+  };
 };
