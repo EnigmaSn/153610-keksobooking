@@ -8,7 +8,7 @@
 
 window.showCard = function (callback) {
 
-  callback = window.onDialogShow();
+  // callback = window.onDialogShow();
   var ESCAPE_KEY_CODE = 27;
 
   var dialog = document.querySelector('.dialog');

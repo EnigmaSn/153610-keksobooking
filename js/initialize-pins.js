@@ -30,17 +30,13 @@ window.initializePins = function () {
   pinMap.addEventListener('click', function (event) {
     // не только клик по пину, но и внутри него
     if (event.target.closest('.pin')) {
-      window.showDialog(onDialogShow);
+      window.showDialog(onDialogShow());
     }
   });
 
   pinMap.addEventListener('keydown', function (event) {
     if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
-      window.showDialog(onDialogShow);
+      window.showDialog(onDialogShow());
     }
   });
-
-  return {
-    onDialogShow: onDialogShow
-  };
 };
