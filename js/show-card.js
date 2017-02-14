@@ -14,12 +14,12 @@ window.showCard = function (callback) {
   var dialog = document.querySelector('.dialog');
   var dialogClose = document.querySelector('.dialog__close'); // Закрытие карточки объявления
 
-  var showDialog = function (callback) {
-    window.dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
-    window.dialog.setAttribute('aria-hidden', false);
+  var showDialog = function (cb) {
+    dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
+    dialog.setAttribute('aria-hidden', false);
 
-    if (typeof callback === "function") {
-      callback();
+    if (typeof callback === 'function') {
+      cb();
     }
   };
 
@@ -38,8 +38,5 @@ window.showCard = function (callback) {
     dialog.style.display = 'none';
   });
 
-  // так?
-  return {
-    showDialog: showDialog(callback)
-  };
+  return showDialog(callback);
 };
