@@ -19,7 +19,7 @@ window.showCard = function (callback) {
     dialog.setAttribute('aria-hidden', false);
 
     if (typeof callback === 'function') {
-      cb();
+      cb(event);
     }
   };
 
