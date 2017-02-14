@@ -20,7 +20,7 @@ window.initializePins = function () {
     event.target.closest('.pin').setAttribute('aria-pressed', true);
   };
 
-  if (onDialogShow === 'function') {
+  if (typeof onDialogShow === 'function') {
     onDialogShow();
   }
 
@@ -39,4 +39,8 @@ window.initializePins = function () {
       window.showDialog(onDialogShow);
     }
   });
+
+  return {
+    onDialogShow: onDialogShow
+  };
 };

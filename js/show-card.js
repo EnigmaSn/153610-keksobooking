@@ -6,7 +6,9 @@
 
 // Перепишите виджет synchronize-fields.js, связывающий поля между собой таким образом, чтобы логика изменения значения зависимого поля находилась в функции обратного вызова
 
-window.showCard = (function () {
+window.showCard = function (callback) {
+
+  callback = window.onDialogShow();
   var ESCAPE_KEY_CODE = 27;
 
   var dialog = document.querySelector('.dialog');
@@ -15,10 +17,6 @@ window.showCard = (function () {
   var showDialog = function (callback) {
     window.dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
     window.dialog.setAttribute('aria-hidden', false);
-
-    if (typeof callback === 'function') {
-      callback();
-    }
   };
 
   var escCloseDialog = function () {
@@ -36,8 +34,8 @@ window.showCard = (function () {
     dialog.style.display = 'none';
   });
 
-  return function (callback) {
-    showDialog();
-    // onDialogShow = callback;
+  // так?
+  return {
+    showDialog: showDialog(callback)
   };
-})();
+};
