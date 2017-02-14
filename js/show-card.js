@@ -17,6 +17,10 @@ window.showCard = function (callback) {
   var showDialog = function (callback) {
     window.dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
     window.dialog.setAttribute('aria-hidden', false);
+
+    if (typeof callback === "function") {
+      callback();
+    }
   };
 
   var escCloseDialog = function () {
