@@ -20,19 +20,26 @@ window.initializePins = function () {
     event.target.closest('.pin').setAttribute('aria-pressed', true);
   };
 
+  var onDialogClose = function () {
+    var activePin = document.querySelector('.pin--active');
+    activePin.focus();
+  };
+
   // вызов
 
   // нажатие на пины через делегирование
   pinMap.addEventListener('click', function (event) {
     // не только клик по пину, но и внутри него
     if (event.target.closest('.pin')) {
-      window.showCard(onDialogShow);
+      onDialogShow(event);
+      window.showCard(onDialogClose);
     }
   });
 
   pinMap.addEventListener('keydown', function (event) {
     if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
-      window.showCard(onDialogShow);
+      onDialogShow(event);
+      window.showCard(onDialogClose);
     }
   });
 };
