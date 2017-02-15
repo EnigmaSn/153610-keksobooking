@@ -24,7 +24,10 @@
 
   window.initializePins(); // пины и диалог
 
-  window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], 'value');
+  window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], function () {
+    timeout.value = time.value;
+  });
+
   window.synchronizeFields(roomNumber, capacity, ['1', '2', '100'], ['0', '3', '3'], 'value');
 
   window.synchronizeFields(type, price, ['1000', '0', '10000'], ['1000', '0', '10000'], 'min');
