@@ -35,8 +35,7 @@
     capacity.value = value;
   });
 
-  window.synchronizeFields(type, price, ['1000', '0', '10000'], ['1000', '0', '10000'], function (value) {
-    //чертовщина нерабочая
+  window.synchronizeFields(type, price, ['flat', 'bungalo', 'palace'], ['1000', '0', '10000'], function (value) {
     price.min = value;
   });
 })();
