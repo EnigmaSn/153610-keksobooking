@@ -13,8 +13,8 @@
 // Цена за ночь
   price.required = true;
   price.type = 'number'; // только цифры
-  price.minLength = 1000;
-  price.maxLength = 1000000;
+  price.min = 1000;
+  price.max = 1000000;
 
   var time = document.querySelector('#time'); // время заезда
   var timeout = document.querySelector('#timeout'); // время выезда
@@ -24,11 +24,19 @@
 
   window.initializePins(); // пины и диалог
 
-  window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], function () {
-    timeout.value = time.value;
+  window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], (function (value) {
+    timeout.value = value;
+  }));
+  window.synchronizeFields(timeout, time, ['12', '13', '14'], ['12', '13', '14'], function (value) {
+    time.value = value;
   });
 
-  window.synchronizeFields(roomNumber, capacity, ['1', '2', '100'], ['0', '3', '3'], 'value');
+  window.synchronizeFields(roomNumber, capacity, ['1', '2', '100'], ['0', '3', '3'], function (value) {
+    capacity.value = value;
+  });
 
-  window.synchronizeFields(type, price, ['1000', '0', '10000'], ['1000', '0', '10000'], 'min');
+  window.synchronizeFields(type, price, ['1000', '0', '10000'], ['1000', '0', '10000'], function (value) {
+    //чертовщина нерабочая
+    price.min = value;
+  });
 })();
