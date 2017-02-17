@@ -13,10 +13,4 @@ window.synchronizeFields = function (source, target, array1, array2, cb) {
   sync();
 
   source.addEventListener('change', sync);
-
-  target.addEventListener('change', function () {
-    var selectedValIndex = array2.indexOf(target.value); // индекс элемента массива 1, который выбран в данный момент
-    var selectedVal = array1[selectedValIndex];
-    cb(selectedVal);
-  });
 };
