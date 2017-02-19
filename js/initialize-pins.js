@@ -42,4 +42,9 @@ window.initializePins = function () {
       window.showCard(onDialogClose);
     }
   });
+
+  var similarApartments = [];
+  window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
+    similarApartments = data;
+  };
 };
