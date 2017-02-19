@@ -5,6 +5,12 @@ window.initializePins = function () {
 
   var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
 
+  var similarApartments = [];
+  window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
+    similarApartments = data;
+  };
+
+
   // деактивация пина при переключении
   var disableActive = function () {
     var element = document.querySelector('.pin--active');
@@ -42,9 +48,4 @@ window.initializePins = function () {
       window.showCard(onDialogClose);
     }
   });
-
-  var similarApartments = [];
-  window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
-    similarApartments = data;
-  };
 };
