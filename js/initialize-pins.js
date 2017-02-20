@@ -8,7 +8,7 @@ window.initializePins = function () {
   var similarApartments = [];
   window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
     similarApartments = data;
-  };
+  });
 
 
   // деактивация пина при переключении
