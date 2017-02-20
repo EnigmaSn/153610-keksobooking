@@ -4,7 +4,7 @@ window.initializePins = function () {
   var ENTER_KEY_CODE = 13;
 
   var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
-
+  window.similarApartments = null;
   window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
     window.similarApartments = data;
     window.renderPins(3, pinMap); // вызываю функцию отрисовки нового пина: 3 штуки в соответствующую обертку
@@ -36,14 +36,14 @@ window.initializePins = function () {
     // не только клик по пину, но и внутри него
     if (event.target.closest('.pin')) {
       onDialogShow(event);
-      window.showCard(onDialogClose);
+      window.showCard(onDialogClose, similarApartments);
     }
   });
 
   pinMap.addEventListener('keydown', function (event) {
     if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
       onDialogShow(event);
-      window.showCard(onDialogClose);
+      window.showCard(onDialogClose, similarApartments);
     }
   });
 };
