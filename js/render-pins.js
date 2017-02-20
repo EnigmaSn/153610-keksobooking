@@ -13,6 +13,7 @@ window.renderPins = function (num, container) {
     // значения координат из data
     newPin.style.left = window.similarApartments[i].location.x + 'px';
     newPin.style.bottom = window.similarApartments[i].location.y + 'px';
+    newPin.querySelector('img').src = window.similarApartments[i].author.avatar;
 
     container.appendChild(newPin); // вставка пина в указанное место в DOM
   }
