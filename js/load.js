@@ -5,7 +5,7 @@ window.load = function (url, onLoad) {
 
   // Конфигурируем запрос: GET-запрос на URL
   // третий параметр - асинхронность (true по умолчанию)
-  xhr.open('GET', 'url');
+  xhr.open('GET', url);
 
   // обработчик всегда до отправки запроса
   xhr.addEventListener('load', function (evt) {
@@ -14,7 +14,6 @@ window.load = function (url, onLoad) {
       var data = JSON.parse(evt.target.response);
       onLoad(data);
     }
-
   });
 
   xhr.send(); // отправляем запрос

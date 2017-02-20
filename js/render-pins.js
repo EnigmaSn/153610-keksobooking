@@ -7,14 +7,13 @@ window.renderPins = function (num, container) {
   var elementToClone = templateElement.content.querySelector('.pin');
 
   // цикл по указанному количеству пинов
-  for (var i = 0; i < num; i++ {
+  for (var i = 0; i < num; i++) {
     var newPin = elementToClone.cloneNode(true); // создаем новый пин на основе шаблона
 
     // значения координат из data
     newPin.style.left = window.similarApartments[i].location.x + 'px';
-    newPin.style.top = window.similarApartments[i].location.y + 'px';
+    newPin.style.bottom = window.similarApartments[i].location.y + 'px';
 
     container.appendChild(newPin); // вставка пина в указанное место в DOM
   }
-
 };

@@ -7,10 +7,8 @@ window.initializePins = function () {
 
   window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
     window.similarApartments = data;
-    window.renderPins(3, tokyo__pin-map); // вызываю функцию отрисовки нового пина: 3 штуки в соответствующую обертку
+    window.renderPins(3, pinMap); // вызываю функцию отрисовки нового пина: 3 штуки в соответствующую обертку
   });
-
-
   // деактивация пина при переключении
   var disableActive = function () {
     var element = document.querySelector('.pin--active');

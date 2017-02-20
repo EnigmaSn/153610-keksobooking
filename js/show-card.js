@@ -9,13 +9,30 @@ window.showCard = (function () {
 
   var closeHandler = null;
 
-  var showDialog = function (cb) {
+  var showDialog = function (cb, data) {
     dialog.style.display = 'block'; // открыть окно диалог при нажатии на пин
     dialog.setAttribute('aria-hidden', false);
     dialogClose.focus(); // пересмотреть вебинар
 
     if (typeof cb === 'function') {
       closeHandler = cb;
+    }
+
+    if (data) {
+
+      // функция вставляет в шаблон (который я пытаюсь сделать) текст
+      (function (data) {
+        dialog.querySelector('.dialog__title img').src = data.author.avatar;
+        dialog.querySelector('.lodge__title').textContent = data.offer.title;
+        dialog.querySelector('.lodge__address').textContent = data.offer.address;
+        dialog.querySelector('.lodge__price').textContent = data.offer.price + '₽/ночь';
+        dialog.querySelector('.lodge__type').textContent = type[data.offer.type];
+        dialog.querySelector('.lodge__rooms-and-guests').textContent = data.offer.rooms + ' комнат для ' + data.offer.rooms + ' гостей';
+        dialog.querySelector('.lodge__checkin-time').textContent = 'Заед после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
+        renderFeatures(data.offer.features);
+        dialog.querySelector('.lodge__description').textContent = data.offer.description;
+        renderPhotos(data.offer.photos);
+      })();
     }
   };
 
