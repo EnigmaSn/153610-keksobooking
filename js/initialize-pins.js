@@ -5,9 +5,8 @@ window.initializePins = function () {
 
   var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
 
-  var similarApartments = [];
   window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
-    similarApartments = data;
+    window.similarApartments = data;
     window.renderPins(3, tokyo__pin-map); // вызываю функцию отрисовки нового пина: 3 штуки в соответствующую обертку
   });
 

@@ -10,8 +10,11 @@ window.renderPins = function (num, container) {
   for (var i = 0; i < num; i++ {
     var newPin = elementToClone.cloneNode(true); // создаем новый пин на основе шаблона
 
-    container.appendChild(newPin); // вставка пина в указанное место в DOM
+    // значения координат из data
+    newPin.style.left = window.similarApartments[i].location.x + 'px';
+    newPin.style.top = window.similarApartments[i].location.y + 'px';
 
+    container.appendChild(newPin); // вставка пина в указанное место в DOM
   }
 
 };
