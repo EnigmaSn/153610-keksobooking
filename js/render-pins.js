@@ -18,14 +18,6 @@ window.renderPins = function (num, container) {
     newPin.setAttribute('tabindex', i + 1 + ''); // очередь табанья
     newPin.setAttribute('data-pin-index', i + ''); // для оконкречиванья пинов)
 
-    // Дальше вообще легко
-    e.target.getAttribut('data-index') делаешь
-    // находишь индекс нажатого пина
-    var index = e.target.getAttribut('data-index') // индекс нажатого пина
-    // Лезешь в data по этому индексу
-    data[index];
-    // И получаешь объект с объявлением для конкретного пина
-
     container.appendChild(newPin); // вставка пина в указанное место в DOM
   }
 };
