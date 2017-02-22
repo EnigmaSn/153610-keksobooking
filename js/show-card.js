@@ -1,6 +1,6 @@
 'use strict';
 
-window.showCard = (function () {
+(function () {
 
   var ESCAPE_KEY_CODE = 27;
 
@@ -17,9 +17,9 @@ window.showCard = (function () {
     dialog.querySelector('.lodge__type').textContent = type[data.offer.type];
     dialog.querySelector('.lodge__rooms-and-guests').textContent = data.offer.rooms + ' комнат для ' + data.offer.rooms + ' гостей';
     dialog.querySelector('.lodge__checkin-time').textContent = 'Заед после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
-    renderFeatures(data.offer.features);
-    dialog.querySelector('.lodge__description').textContent = data.offer.description;
-    renderPhotos(data.offer.photos);
+    // renderFeatures(data.offer.features);
+    // dialog.querySelector('.lodge__description').textContent = data.offer.description;
+    // renderPhotos(data.offer.photos);
   };
 
   var showDialog = function (cb, data) {
@@ -52,5 +52,5 @@ window.showCard = (function () {
     dialog.setAttribute('aria-hidden', true);
   });
 
-  return showDialog;
+  window.showCard = showDialog;
 })();
