@@ -22,7 +22,11 @@
   var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
   var type = document.querySelector('#type'); // тип жилья
 
-  window.initializePins(); // пины и диалог
+  var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
+
+  window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
+    window.initializePins(data, pinMap); // вызываю функцию отрисовки нового пина: 3 штуки в соответствующую обертку
+  });
 
   window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], (function (value) {
     timeout.value = value;
