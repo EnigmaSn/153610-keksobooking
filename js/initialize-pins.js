@@ -1,9 +1,12 @@
 'use strict';
 
-window.initializePins = function () {
-  var ENTER_KEY_CODE = 13;
+// отрисовка пинов из шаблона
 
-  var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
+(function () {
+
+  var ENTER_KEY_CODE = 13;
+  var PIN_WIDTH = 56;
+  var PIN_HEIGHT = 75;
 
   // деактивация пина при переключении
   var disableActive = function () {
@@ -25,21 +28,45 @@ window.initializePins = function () {
     activePin.focus();
   };
 
-  // вызов
+  var templateElement = document.querySelector('#pin-template');
+  var elementToClone = templateElement.content.querySelector('.pin');
 
-  // нажатие на пины через делегирование
-  pinMap.addEventListener('click', function (event) {
-    // не только клик по пину, но и внутри него
-    if (event.target.closest('.pin')) {
-      onDialogShow(event);
-      window.showCard(onDialogClose);
-    }
-  });
+  // отрисовка конкретного пина
+  var renderPin = function (flat, i) {
 
-  pinMap.addEventListener('keydown', function (event) {
-    if (event.target.closest('.pin') && event.keyCode === ENTER_KEY_CODE) {
+    var newPin = elementToClone.cloneNode(true); // создаем новый пин на основе шаблона
+    // значения координат из data
+    newPin.style.left = (flat.location.x - PIN_WIDTH / 2) + 'px';
+    newPin.style.top = (flat.location.y - PIN_HEIGHT) + 'px';
+    newPin.querySelector('img').src = flat.author.avatar;
+
+    newPin.setAttribute('tabindex', i + 1); // очередь табанья
+    newPin.setAttribute('data-index', i); // для оконкречиванья пинов)
+
+    newPin.addEventListener('click', function () {
       onDialogShow(event);
-      window.showCard(onDialogClose);
+      window.showCard(onDialogClose, flat);
+    });
+    newPin.addEventListener('keydown', function () {
+      if (event.keyCode === ENTER_KEY_CODE) {
+        onDialogShow(event);
+        window.showCard(onDialogClose, flat);
+      }
+    });
+
+    return newPin;
+  };
+
+  // общая отрисовка пинов
+  window.initializePins = function (apartments, container) {
+    // цикл по указанному количеству пинов
+    apartments = apartments.slice(0, 3); // берем только первые три квартиры
+    for (var i = 0; i < apartments.length; i++) {
+      var flat = apartments[i];
+      var renderedPin = renderPin(flat, i);
+      container.appendChild(renderedPin); // вставка пина в указанное место в DOM
     }
-  });
-};
+  };
+})();
+
+
