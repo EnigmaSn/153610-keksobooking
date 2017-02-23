@@ -44,10 +44,12 @@
     newPin.setAttribute('data-index', i); // для оконкречиванья пинов)
 
     newPin.addEventListener('click', function () {
+      onDialogShow(event);
       window.showCard(onDialogClose, flat);
     });
     newPin.addEventListener('keydown', function () {
       if (event.keyCode === ENTER_KEY_CODE) {
+        onDialogShow(event);
         window.showCard(onDialogClose, flat);
       }
     });
@@ -58,6 +60,7 @@
   // общая отрисовка пинов
   window.initializePins = function (apartments, container) {
     // цикл по указанному количеству пинов
+    apartments = apartments.slice(0, 3); // берем только первые три квартиры
     for (var i = 0; i < apartments.length; i++) {
       var flat = apartments[i];
       var renderedPin = renderPin(flat, i);
