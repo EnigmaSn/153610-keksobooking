@@ -24,12 +24,14 @@
   var renderPhotos = function (photos) {
     var photosContainer = dialog.querySelector('.lodge__photos');
     photosContainer.innerHTML = '';
+    var newPhotoWidth = 52;
+    var newPhotoHeight = 42;
     for (var i = 0; i < photos.length; i++) {
       var newPhoto = document.createElement('img');
       newPhoto.src = photos[i];
       newPhoto.setAttribute('alt', 'Lodge photo');
-      newPhoto.setAttribute('width', '52');
-      newPhoto.setAttribute('height', '42');
+      newPhoto.setAttribute('width', newPhotoWidth);
+      newPhoto.setAttribute('height', newPhotoHeight);
       photosContainer.appendChild(newPhoto);
     }
   };
