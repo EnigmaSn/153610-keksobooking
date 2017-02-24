@@ -67,6 +67,10 @@
       container.appendChild(renderedPin); // вставка пина в указанное место в DOM
     }
   };
+
+  window.filterPins = function (data) {
+    // вызывается в форме после инициализации трех пинов
+  };
 })();
 
 
