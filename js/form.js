@@ -24,11 +24,12 @@
 
   var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
 
-  window.similarApartments = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data'; // загружаемые данные
+  window.dataURL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data'; // загружаемые данные
 
-  window.load(window.similarApartments, function (data) {
+  window.load(window.dataURL, function (data) {
+    window.similarApartments = data;
     window.initializePins(data, pinMap); // вызываю функцию отрисовки нового пина в  соответствующую обертку
-    window.filterPins(window.similarApartments); // фильтрация пинов (не обрезанная, по полному массиву
+    window.filterPins(data); // фильтрация пинов (не обрезанная, по полному массиву
   });
 
   window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], (function (value) {

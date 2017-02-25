@@ -18,4 +18,6 @@ window.load = function (url, onLoad) {
 
   xhr.send(); // отправляем запрос
   // у GET запросов нет тела
+
+
 };

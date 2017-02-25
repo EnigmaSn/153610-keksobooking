@@ -8,6 +8,7 @@ window.filterPins = function (data) {
   var housingRoomNumber = tokyoFilters.querySelector('#housing_room-number');
   var housingGuestsNumber = tokyoFilters.querySelector('#housing_guests-number');
   var housingFeatures = tokyoFilters.querySelector('#housing_features');
+  var checkboxes = housingFeatures.querySelectorAll('input');
 
   var actualFeatures = null;
   var pins = document.querySelectorAll('.pin:not(.pin__main)'); // все пины, кроме большого
@@ -43,15 +44,113 @@ window.filterPins = function (data) {
     var filteredPins = Array.prototype.slice.call(pins, 0); // call вставляет первым параметром явно указанный this (pins)
 
     // Метод filter() создаёт новый массив со всеми элементами, прошедшими проверку, задаваемую в передаваемой функции.
+    // Метод «arr.filter(callback[, thisArg])» используется для фильтрации массива через функцию.
     filteredPins = filteredPins.filter(checkRoomNumber);
     filteredPins = filteredPins.filter(checkType);
     filteredPins = filteredPins.filter(checkHousingGuestsNumber);
     filteredPins = filteredPins.filter(checkPrice);
     filteredPins = filteredPins.filter(hasFeatures);
     showFilteredPins(filteredPins);
-  }
+  };
+
+  // фильтр для типа жилья
+  var checkType = function (item) {
+    var index = item.dataset.pinIndex;
+    var type = housingType.value;
+    if (type === 'any') {
+      return true;
+    }
+    return data[index].offer.type === type;
+  };
+
+  // фильтр для стоимости
+  var checkPrice = function checkPrice(item) {
+    var price = data[item.dataset.pinIndex].offer.price;
+    switch (housingPrice.value) {
+      case 'low':
+        return price < 10000;
+      case 'middle':
+        return price >= 10000 && price < 50000;
+      case 'hight':
+        return price >= 50000;
+      default:
+        return false;
+    }
+  };
 
   // фильтр для количества комнат
-  var checkRoomNumber = function () {
-    // фильтровали, фильтровали, да не выфильтровали
+  var checkRoomNumber = function (item) {
+    var index = item.dataset.pinIndex;
+    var numberOfRooms = housingRoomNumber.value;
+    if (numberOfRooms === 'any') {
+      return true;
+    }
+    return data[index].offer.rooms === +numberOfRooms;
+  };
+
+  // фильтр для количества гостей
+  var checkHousingGuestsNumber = function (item) {
+    var index = item.dataset.pinIndex;
+    var numberOfGuests = housingGuestsNumber.value;
+    if (numberOfGuests === 'any') {
+      return true;
+    }
+    return data[index].offer.guests === +numberOfGuests;
+  };
+
+  // фильтр для особенностей
+  // если в данных features для конкретного пина нет хотя бы одного feature из обязательных значений, то возвращается false.
+  var hasFeatures = function (item) {
+    var index = item.dataset.pinIndex;
+    var result = true;
+    var features = data[index].offer.features;
+    for (var i = 0; i < actualFeatures.length; i++) {
+      if (features.indexOf(actualFeatures[i]) === -1) {
+        result = false;
+      }
+    }
+    return result;
+  };
+
+  // удаляет класс invisible. Если активный пин не попал в отфильтрованный массив, то скрываем его карту и делаем его неактивным.
+  var showFilteredPins = function (elements) {
+    var activePinIsFiltered = true;
+    var activePin = document.querySelector('.pin--active');
+    elements = Array.prototype.slice.call(elements, 0);
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].classList.remove('invisible');
+      // если условие сработало, то pin попал в список отображаемых.
+      if (elements[i].classList.contains('pin--active')) {
+        activePinIsFiltered = false;
+      }
+    }
+    // если pin--active среди отображаемых нет, то проверяем есть ли он вообще. Если есть, то деактивируем и прячем окно диалога
+    if (activePinIsFiltered && activePin) {
+      deactivatePin(activePin);
+      window.hideCard();
+    }
+  };
+
+  // функция возвращает массив из обязательных значений features, которых выбрал пользователь.
+  // При каждом событии функция возвращает новый массив
+  var getActualFeatures = function () {
+    var actionFeatures = [];
+    var features = Array.prototype.slice.call(checkboxes, 0);
+    features.forEach(function (item) {
+      if (item.checked) {
+        actionFeatures.push(item.value);
+      }
+    });
+    return actionFeatures;
+  };
+
+  var deactivatePin = function (activePin) {
+    activePin.classList.remove('pin--active');
+    activePin.setAttribute('aria-pressed', 'false');
+  };
+
+  // вызываем функцию для первоначальной фильтрации. В ином случае на экране будут выведены все пины, даже те, которые попадают под фильтр.
+  showActionPins();
 };
+
+
