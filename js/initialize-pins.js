@@ -21,6 +21,7 @@
     disableActive(); // вызов функции удаления активного класса при клике на другой пин
     event.target.closest('.pin').classList.add('pin--active');
     event.target.closest('.pin').setAttribute('aria-pressed', true);
+    window.pinIndex = parseInt(event.target.closest('.pin').dataset.pinIndex, 10);
   };
 
   var onDialogClose = function () {
@@ -41,7 +42,7 @@
     newPin.querySelector('img').src = flat.author.avatar;
 
     newPin.setAttribute('tabindex', i + 1); // очередь табанья
-    newPin.setAttribute('data-index', i); // для оконкречиванья пинов)
+    newPin.setAttribute('data-pin-index', i); // для оконкречиванья пинов)
 
     newPin.addEventListener('click', function () {
       onDialogShow(event);
