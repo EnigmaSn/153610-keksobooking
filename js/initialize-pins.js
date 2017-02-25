@@ -8,6 +8,8 @@
   var PIN_WIDTH = 56;
   var PIN_HEIGHT = 75;
 
+  var container = document.querySelector('.tokyo__pin-map'); // обертка для пинов
+
   // деактивация пина при переключении
   var disableActive = function () {
     var element = document.querySelector('.pin--active');
@@ -21,7 +23,6 @@
     disableActive(); // вызов функции удаления активного класса при клике на другой пин
     event.target.closest('.pin').classList.add('pin--active');
     event.target.closest('.pin').setAttribute('aria-pressed', true);
-    window.pinIndex = parseInt(event.target.closest('.pin').dataset.pinIndex, 10);
   };
 
   var onDialogClose = function () {
@@ -59,15 +60,24 @@
   };
 
   // общая отрисовка пинов
-  window.initializePins = function (apartments, container) {
+
+  window.initializePins = function (data) {
+    for (var t = 0; t < container.children.length; t++) {
+      var child = container.children[t];
+      if (!child.classList.contains('pin__main')) {
+        container.removeChild(child);
+      }
+    }
+
     // цикл по указанному количеству пинов
-    apartments = apartments.slice(0, 3); // берем только первые три квартиры
-    for (var i = 0; i < apartments.length; i++) {
-      var flat = apartments[i];
+    // apartments = apartments.slice(0, 3); // берем только первые три квартиры
+    for (var i = 0; i < data.length; i++) {
+      var flat = data[i];
       var renderedPin = renderPin(flat, i);
       container.appendChild(renderedPin); // вставка пина в указанное место в DOM
     }
   };
+
 })();
 
 

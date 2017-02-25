@@ -22,14 +22,11 @@
   var capacity = document.querySelector('#capacity'); // вместимость (количество гостей)
   var type = document.querySelector('#type'); // тип жилья
 
-  var pinMap = document.querySelector('.tokyo__pin-map'); // обертка для пинов
+  var dataURL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data'; // загружаемые данные
 
-  window.dataURL = 'https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data'; // загружаемые данные
-
-  window.load(window.dataURL, function (data) {
-    window.similarApartments = data;
-    window.initializePins(data, pinMap); // вызываю функцию отрисовки нового пина в  соответствующую обертку
-    window.filterPins(data); // фильтрация пинов (не обрезанная, по полному массиву
+  window.load(dataURL, function (data) {
+    window.filterPins(data);
+    window.initializePins(data);
   });
 
   window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], (function (value) {

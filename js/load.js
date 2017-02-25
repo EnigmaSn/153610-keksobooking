@@ -8,10 +8,10 @@ window.load = function (url, onLoad) {
   xhr.open('GET', url);
 
   // обработчик всегда до отправки запроса
-  xhr.addEventListener('load', function (evt) {
+  xhr.addEventListener('load', function (event) {
     // onLoad — функция обратного вызова, которая срабатывает при успешном выполнении запроса. При вызове функции onLoad в её единственный параметр передается набор полученных данных.
-    if (evt.target.status === 200) {
-      var data = JSON.parse(evt.target.response);
+    if (event.target.status === 200) {
+      var data = JSON.parse(event.target.response);
       onLoad(data);
     }
   });
