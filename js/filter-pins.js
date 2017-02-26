@@ -167,6 +167,35 @@
       }
     };
 
-    return data.filter(filterType);
-  };
+    housingPrice.addEventListener('change', function () {
+      var filteredPins = data.filter(filterPrice);
+
+      window.initializePins(filteredPins);
+    });
+
+    var filterPrice = function (element) {
+      var price = element.offer.price;
+
+      switch (price === housingType.value) {
+        case 'low':
+          return price < 10000;
+        case 'middle':
+          return price >= 10000 && price < 50000;
+        case 'hight':
+          return price >= 50000;
+        default:
+          return false;
+      }
+    };
+
+    // housingRoomNumber.addEventListener('change', function () {
+    //   var filteredPins = data.filter(filterRoomNumber);
+    //
+    //   window.initializePins(filteredPins);
+    // });
+    //
+    // var filterRoomNumber = function (element) {
+    //   if (element.offer.type === housingType.value)
+    // };
+  }
 })();
