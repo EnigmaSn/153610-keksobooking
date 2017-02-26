@@ -46,12 +46,12 @@
     newPin.setAttribute('data-pin-index', i); // для оконкречиванья пинов)
 
     newPin.addEventListener('click', function () {
-      onDialogShow(event);
+      onDialogShow();
       window.showCard(onDialogClose, flat);
     });
     newPin.addEventListener('keydown', function () {
       if (event.keyCode === ENTER_KEY_CODE) {
-        onDialogShow(event);
+        onDialogShow();
         window.showCard(onDialogClose, flat);
       }
     });
