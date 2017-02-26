@@ -71,7 +71,6 @@
     }
 
     // цикл по указанному количеству пинов
-    // apartments = apartments.slice(0, 3); // берем только первые три квартиры
     for (var i = 0; i < data.length; i++) {
       var flat = data[i];
       var renderedPin = renderPin(flat, i);

@@ -1,6 +1,4 @@
 'use strict';
-// Перепишите виджет synchronize-fields.js, связывающий поля между собой таким образом, чтобы логика изменения значения зависимого поля находилась в функции обратного вызова
-
 
 (function () {
   window.synchronizeFields = function (source, target, array1, array2, cb) {
