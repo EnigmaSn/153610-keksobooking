@@ -11,9 +11,9 @@
     var housingGuestsNumber = tokyoFilters.querySelector('#housing_guests-number');
     var housingFeatures = tokyoFilters.querySelector('#housing_features');
     var checkboxes = housingFeatures.querySelectorAll('input');
-
-    var actualFeatures = null;
-    var pins = document.querySelectorAll('.pin:not(.pin__main)'); // все пины, кроме большого
+    //
+    // var actualFeatures = null;
+    // var pins = document.querySelectorAll('.pin:not(.pin__main)'); // все пины, кроме большого
 
     // // навешиваем обработчики на изменения содержимого элементов.
     // housingType.addEventListener('change', function () {
@@ -188,14 +188,56 @@
       }
     };
 
-    // housingRoomNumber.addEventListener('change', function () {
-    //   var filteredPins = data.filter(filterRoomNumber);
-    //
-    //   window.initializePins(filteredPins);
-    // });
-    //
-    // var filterRoomNumber = function (element) {
-    //   if (element.offer.type === housingType.value)
-    // };
-  }
+    housingRoomNumber.addEventListener('change', function () {
+      var filteredPins = data.filter(filterRoomNumber);
+
+      window.initializePins(filteredPins);
+    });
+
+    var filterRoomNumber = function (element) {
+      if (element.offer.rooms === housingRoomNumber.value || housingRoomNumber.value === 'any') {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    housingGuestsNumber.addEventListener('change', function () {
+      var filteredPins = data.filter(filterGuestsNumber);
+
+      window.initializePins(filteredPins);
+    });
+
+    var filterGuestsNumber = function (element) {
+      if (element.offer.rooms === housingGuestsNumber.value || housingGuestsNumber.value === 'any') {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    housingGuestsNumber.addEventListener('change', function () {
+      var filteredPins = data.filter(filterGuestsNumber);
+
+      window.initializePins(filteredPins);
+    });
+
+    var filterGuestsNumber = function (element) {
+      if (element.offer.guests === housingGuestsNumber.value || housingGuestsNumber.value === 'any') {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    housingFeatures.addEventListener('click', function () {
+      var filteredPins = data.filter(filterFeatures);
+      window.initializePins(filteredPins);
+    });
+
+    var filterFeatures = function () {
+      // пыщ-пыщ
+    };
+  };
+
 })();
