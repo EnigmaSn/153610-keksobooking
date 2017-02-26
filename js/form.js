@@ -26,7 +26,7 @@
 
   window.load(dataURL, function (data) {
     window.filterPins(data);
-    window.initializePins(data);
+    window.initializePins(data.slice(0, 3));
   });
 
   window.synchronizeFields(time, timeout, ['12', '13', '14'], ['12', '13', '14'], (function (value) {

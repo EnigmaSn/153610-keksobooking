@@ -45,13 +45,13 @@
     newPin.setAttribute('tabindex', i + 1); // очередь табанья
     newPin.setAttribute('data-pin-index', i); // для оконкречиванья пинов)
 
-    newPin.addEventListener('click', function () {
-      onDialogShow();
+    newPin.addEventListener('click', function (event) {
+      onDialogShow(event);
       window.showCard(onDialogClose, flat);
     });
-    newPin.addEventListener('keydown', function () {
+    newPin.addEventListener('keydown', function (event) {
       if (event.keyCode === ENTER_KEY_CODE) {
-        onDialogShow();
+        onDialogShow(event);
         window.showCard(onDialogClose, flat);
       }
     });
@@ -62,8 +62,9 @@
   // общая отрисовка пинов
 
   window.initializePins = function (data) {
-    for (var t = 0; t < container.children.length; t++) {
-      var child = container.children[t];
+    var children = [].slice.call(container.children); // копия массива children
+    for (var t = 0; t < children.length; t++) {
+      var child = children[t];
       if (!child.classList.contains('pin__main')) {
         container.removeChild(child);
       }

@@ -11,8 +11,17 @@
     var housingGuestsNumber = tokyoFilters.querySelector('#housing_guests-number');
     var housingFeatures = tokyoFilters.querySelector('#housing_features');
     var checkboxes = housingFeatures.querySelectorAll('input');
-    var pins = document.querySelectorAll('.pin:not(.pin__main)');
-    var actualFeatures = null;
+
+    var showActionPins = function () {
+
+      var filteredPins = data.slice();
+      filteredPins = filteredPins.filter(filterRoomNumber);
+      filteredPins = filteredPins.filter(filterType);
+      filteredPins = filteredPins.filter(filterGuestsNumber);
+      filteredPins = filteredPins.filter(filterPrice);
+      filteredPins = filteredPins.filter(filterFeatures);
+      window.initializePins(filteredPins);
+    };
 
     // навешиваем обработчики на изменения содержимого элементов.
     housingType.addEventListener('change', showActionPins);
@@ -21,52 +30,35 @@
     housingGuestsNumber.addEventListener('change', showActionPins);
     housingFeatures.addEventListener('click', showActionPins);
 
-    var showActionPins = function () {
-      actualFeatures = getActualFeatures(); // actionFeatures
-
-      var filteredPins = data.prototype.slice.call(pins, 0);
-      filteredPins = data.filter(filterRoomNumber);
-      filteredPins = data.filter(filterType);
-      filteredPins = data.filter(filterGuestsNumber);
-      filteredPins = data.filter(filterPrice);
-      filteredPins = data.filter(filterFeatures);
-      window.initializePins(filteredPins);
-    };
-
-    // функция возвращает массив из обязательных значений features, которых выбрал пользователь.
-    // При каждом событии функция возвращает новый массив
-    function getActualFeatures() {
-      var actionFeatures = [];
-      var features = Array.prototype.slice.call(checkboxes, 0); // превращает набор элементов checkboxes в настоящий массив.
-      features.forEach(function (element) {
-        if (element.checked) {
-          actionFeatures.push(element.value);
+    var getSelectedFeatures = function () {
+      var selected = [];
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          selected.push(checkboxes[i].value);
         }
-      });
-      return actionFeatures;
-    }
-
-    // фильтр для особенностей
-    // если в данных features для конкретного пина нет хотя бы одного feature из обязательных значений, то возвращается false.
-    var filterFeatures = function (element) {
-
+      }
+      return selected;
     };
-    // Через делегирование надо делать. На событие клик для контейнера фич вешаем функцию. Она смотрит на состояние чекбоксов в контейнере. Если чекбокс активный, то добавляем значение value этого чекбокса в массив.
-    //   Получившийся массив представляет из себя список обязательных фич в объявлении. Если хотя бы одной фичи не будет, то объявление не должно отображаться.
-    //   Потом в цикле нужно прогнать каждое значение этого массива и сделать проверку его наличия в data[index].features
+    var filterFeatures = function (element) {
+      var features = getSelectedFeatures();
+      var count = 0;
+      for (var n = 0; n < features.length; n++) {
+        if (element.offer.features.includes(features[n])) {
+          count++;
+        }
+      }
+
+      return count === features.length;
+    };
 
     var filterType = function (element) {
-      if (element.offer.type === housingType.value || housingType.value === 'any') {
-        return true;
-      } else {
-        return false;
-      }
+      return element.offer.type === housingType.value || housingType.value === 'any';
     };
 
     var filterPrice = function (element) {
       var price = element.offer.price;
 
-      switch (price === housingType.value) {
+      switch (housingPrice.value) {
         case 'low':
           return price < 10000;
         case 'middle':
@@ -79,21 +71,11 @@
     };
 
     var filterRoomNumber = function (element) {
-      if (element.offer.rooms === housingRoomNumber.value || housingRoomNumber.value === 'any') {
-        return true;
-      } else {
-        return false;
-      }
+      return element.offer.rooms === parseInt(housingRoomNumber.value, 10) || housingRoomNumber.value === 'any';
     };
 
     var filterGuestsNumber = function (element) {
-      if (element.offer.guests === housingGuestsNumber.value || housingGuestsNumber.value === 'any') {
-        return true;
-      } else {
-        return false;
-      }
+      return element.offer.guests === parseInt(housingGuestsNumber.value, 10) || housingGuestsNumber.value === 'any';
     };
-
-    showActionPins();
   };
 })();
