@@ -70,14 +70,16 @@
       }
     }
 
+    var renderedPinFragment = document.createDocumentFragment();
+
     // цикл по указанному количеству пинов
     for (var j = 0; j < data.length; j++) {
       var flat = data[j];
       var renderedPin = renderPin(flat, j);
-      container.appendChild(renderedPin); // вставка пина в указанное место в DOM
+      renderedPinFragment.appendChild(renderedPin);
     }
+    container.appendChild(renderedPinFragment); // вставка фрагмента с пинами в указанное место в DOM
   };
-
 })();
 
 
