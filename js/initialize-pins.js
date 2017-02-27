@@ -63,17 +63,17 @@
 
   window.initializePins = function (data) {
     var children = [].slice.call(container.children); // копия массива children
-    for (var t = 0; t < children.length; t++) {
-      var child = children[t];
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
       if (!child.classList.contains('pin__main')) {
         container.removeChild(child);
       }
     }
 
     // цикл по указанному количеству пинов
-    for (var i = 0; i < data.length; i++) {
-      var flat = data[i];
-      var renderedPin = renderPin(flat, i);
+    for (var j = 0; j < data.length; j++) {
+      var flat = data[j];
+      var renderedPin = renderPin(flat, j);
       container.appendChild(renderedPin); // вставка пина в указанное место в DOM
     }
   };

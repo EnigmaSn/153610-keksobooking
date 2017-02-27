@@ -13,12 +13,17 @@
   var renderFeatures = function (features) {
     var featuresContainer = dialog.querySelector('.lodge__features');
     featuresContainer.innerHTML = ''; // чистим контейнер
+
+    var featuresFragment = document.createDocumentFragment();
+
     for (var i = 0; i < features.length; i++) {
       var newSpan = document.createElement('span'); // новый элемент-контейнер, в котором будет иконка
       newSpan.classList.add('feature__image');
       newSpan.classList.add('feature__image--' + features[i]); // иконка
-      featuresContainer.appendChild(newSpan);
+
+      featuresFragment.appendChild(newSpan);
     }
+    featuresContainer.appendChild(featuresFragment);
   };
 
   var renderPhotos = function (photos) {
@@ -26,14 +31,19 @@
     photosContainer.innerHTML = '';
     var newPhotoWidth = 52;
     var newPhotoHeight = 42;
+
+    var photosFragment = document.createDocumentFragment();
+
     for (var i = 0; i < photos.length; i++) {
       var newPhoto = document.createElement('img');
       newPhoto.src = photos[i];
       newPhoto.setAttribute('alt', 'Lodge photo');
       newPhoto.setAttribute('width', newPhotoWidth);
       newPhoto.setAttribute('height', newPhotoHeight);
-      photosContainer.appendChild(newPhoto);
+
+      photosFragment.appendChild(newPhoto);
     }
+    photosContainer.appendChild(photosFragment);
   };
 
   var renderDialog = function (data) {
